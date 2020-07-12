@@ -13,6 +13,8 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.safari.SafariDriver;
+import org.testng.Assert;
+import org.testng.Reporter;
 
 import com.wordpress.commons.GlobalConstants;
 
@@ -99,7 +101,7 @@ public class AbstractTest {
 			driver.manage().window().maximize();
 		}
 		driver.manage().deleteAllCookies();
-		driver.get(GlobalConstants.DEV_URL);
+		driver.get(GlobalConstants.LOGIN_PAGE_URL);
 		driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 
 		return driver;
@@ -180,7 +182,7 @@ public class AbstractTest {
 			driver = new SafariDriver();
 		}
 		// driver.manage().deleteAllCookies();
-		driver.get(GlobalConstants.DEV_URL);
+		driver.get(GlobalConstants.LOGIN_PAGE_URL);
 		driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 
 		return driver;
@@ -253,5 +255,37 @@ public class AbstractTest {
 	protected String getBankGuruToday() {
 		return getCurrentYear() + "-" + getCurrentMonth() + "-" + getCurrentDay();
 	}
+
+	private boolean checkEquals(Object actual, Object expected) {
+		boolean pass = true;
+		try {
+			Assert.assertEquals(actual, expected);
+		} catch (Throwable e) {
+			pass = false;
+			Reporter.getCurrentTestResult().setThrowable(e);
+		}
+		return pass;
+	}
+
+	private boolean checkTrue(boolean condition) {
+		boolean pass = true;
+		try {
+			Assert.assertTrue(condition);
+		} catch (Throwable e) {
+			pass = false;
+			Reporter.getCurrentTestResult().setThrowable(e);
+		}
+		return pass;
+	}
+
+	protected boolean verifyEquals(String actual, String expected) {
+		return checkEquals(actual, expected);
+	}
+
+	protected boolean verifyTrue(boolean condition) {
+		return checkTrue(condition);
+	}
+
+
 
 }
