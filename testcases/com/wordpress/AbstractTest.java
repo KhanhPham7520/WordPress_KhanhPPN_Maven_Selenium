@@ -44,27 +44,11 @@ public class AbstractTest {
 
 	public WebDriver getBrowserDriver(String browserName) {
 		if (browserName.equalsIgnoreCase("firefox")) {
-			// WebDriverManager.firefoxdriver().setup();
-			//// Install plugins for Chrome
-			// FirefoxProfile profile = new FirefoxProfile();
-			// File translate = new File(rootFolder +
-			// "\\browserExtension\\google_translate.xpi");
-			// profile.addExtension(translate);
-			// FirefoxOptions options = new FirefoxOptions();
-			// options.setProfile(profile);
-			// driver = new FirefoxDriver(options);
-			// System.setProperty(GlobalConstants.FIREFOX_DRIVER_SYSTEM_KEY,
-			// GlobalConstants.FIREFOX_DRIVER_SYSTEM_VALUE);
 			WebDriverManager.firefoxdriver().setup();
-			// System.setProperty(FirefoxDriver.SystemProperty.DRIVER_USE_MARIONETTE,
-			// "true");
-			// System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, rootFolder +
-			// "\\LogBrowser\\Firefox.log");
-
 			driver = new FirefoxDriver();
 		}
 		if (browserName.equalsIgnoreCase("headless_firefox")) {
-			System.setProperty(GlobalConstants.FIREFOX_DRIVER_SYSTEM_KEY, GlobalConstants.FIREFOX_DRIVER_SYSTEM_VALUE);
+			WebDriverManager.firefoxdriver().arch32().setup();
 			FirefoxOptions options = new FirefoxOptions();
 			options.addArguments("--headless");
 			options.addArguments("window-size=1920x1080");
@@ -79,21 +63,15 @@ public class AbstractTest {
 			driver = new ChromeDriver(options);
 		}
 		if (browserName.equalsIgnoreCase("chrome")) {
-			// WebDriverManager.chromedriver().setup();
-			System.setProperty(GlobalConstants.CHROME_DRIVER_SYSTEM_KEY, GlobalConstants.CHROME_DRIVER_SYSTEM_VALUE);
+			WebDriverManager.chromedriver().setup();
 			System.setProperty("webdriver.chrome.args", "--disable-logging");
 			System.setProperty("webdriver.chrome.silentOutput", "true");
-			// Install plugins for Chrome
-			// File file = new File(rootFolder +
-			// "\\browserExtension\\google_translate.crx");
-			// ChromeOptions options = new ChromeOptions();
-			// options.addExtensions(file);
-			// driver = new ChromeDriver(options);
 			driver = new ChromeDriver();
 
 		}
 		if (browserName.equalsIgnoreCase("edge")) {
-			System.setProperty(GlobalConstants.EDGE_DRIVER_SYSTEM_KEY, GlobalConstants.EDGE_DRIVER_SYSTEM_VALUE);
+			//System.setProperty(GlobalConstants.EDGE_DRIVER_SYSTEM_KEY, GlobalConstants.EDGE_DRIVER_SYSTEM_VALUE);
+			WebDriverManager.edgedriver().arch32().setup();
 			driver = new EdgeDriver();
 		}
 		if (browserName.equalsIgnoreCase("safari")) {
